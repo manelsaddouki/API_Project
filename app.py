@@ -57,6 +57,9 @@ def create_app(db_url=None):
             } ), 401,)
 
 
+    @app.before_request
+    def create_table():
+        db.create_all()
 
     api.register_blueprint(DonorDBBlueprint)
     api.register_blueprint(AffectedDBBlueprint)
