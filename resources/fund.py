@@ -56,7 +56,7 @@ class fund(MethodView):
         description="Returned if the fund is assigned to one or more donors. In this case, the fund is not deleted.",
     )
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     def delete(self, fund_id):
         fund = FundModel.query.get_or_404(fund_id)
 
@@ -90,7 +90,7 @@ class LinkFundsToDonors(MethodView):
         return fund
 
     @blp.response(200, FundAndDonorSchema)
-    @jwt_required()
+    @jwt_required(fresh=True)
     def delete(self, donor_id, fund_id):
         donor = DonorModel.query.get_or_404(donor_id)
         fund = FundModel.query.get_or_404(fund_id)
