@@ -36,8 +36,10 @@ class UserSchema(Schema):
     id = fields.Int(dump_only=True)
     username = fields.Str(required=True)
     password = fields.Str(required=True, load_only=True) #load_only=true so we just get it from client, it's never sent to them (try to delete it and the pwd will be returned in the get request (hashed password))
-
-
+    
+class UserRegisterSchema(UserSchema):
+    email = fields.Str(required=True)
+    
 class FundAndDonorSchema(Schema):
     message = fields.Str()
     donor = fields.Nested(DonorSchema)
