@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from flask_smorest import Api
+import secrets
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -18,7 +19,7 @@ from resources.user import blp as UserBlueprint
 def create_app(db_url=None):
     app = Flask(__name__)
     load_dotenv()
-    
+
     app.config["PROPAGATE_EXCEPTIONS"] = True
     app.config["API_TITLE"] = "Stores REST API"
     app.config["API_VERSION"] = "v1"
@@ -36,7 +37,7 @@ def create_app(db_url=None):
     
     api = Api(app)
 
-    app.config["JWT_SECRET_KEY"] = "jose"
+    app.config["JWT_SECRET_KEY"] = str(secrets.SystemRandom().getrandbits(128))
     jwt = JWTManager(app)
 
     @jwt.expired_token_loader
