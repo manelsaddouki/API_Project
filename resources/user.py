@@ -14,13 +14,13 @@ from sqlalchemy import or_
 blp = Blueprint("Users", "users", description="Operations on users")
 
 
-def send_simple_message(to, subject, body):
+def send_confirmation_email(to, subject, body):
     domain = os.getenv("MAILGUN_DOMAIN")
     return requests.post(
-        f"https://api.mailgun.net/v3/{domain}/messages",
-        auth=("api", os.getenv("MAILGUN_API_KEY")),
+        f"https://api.mailgun.net/v3/sandbox80ba84e27fea4b139f31fed5120e3997.mailgun.org/messages",
+        auth=("api", "956d0e2f11c1ff102a21063c45fd7245-5e3f36f5-5fa86440"),
         data={
-            "from": f"Loss and Damage Funds Committee <mailgun@{domain}>",
+            "from": f"Loss and Damage Funds Committee <mailgun@sandbox80ba84e27fea4b139f31fed5120e3997.mailgun.org>",
             "to": [to],
             "subject": subject,
             "text": body,
@@ -48,7 +48,7 @@ class UserRegister(MethodView):
         db.session.add(user)
         db.session.commit()
 
-        send_simple_message(
+        send_confirmation_email(
             to=user.email,
             subject="Successfully signed up",
             body=f" {user.username}! You have successfully signed up."
@@ -92,3 +92,10 @@ class User(MethodView):
         db.session.delete(user)
         db.session.commit()
         return {"message": "User deleted."}, 200
+    
+@blp.route("/users")
+class UsersList(MethodView):
+    #@jwt_required()
+    @blp.response(200, UserRegisterSchema(many=True))
+    def get(self):
+       return UserModel.query.all()
