@@ -11,11 +11,13 @@ blp = Blueprint("Funds", "fund", description="Operations on funds")
 
 @blp.route("/fund/<int:affected_id>")
 class FundsforAffected(MethodView):
+    #@jwt_required() # require access token 
     @blp.response(200, FundSchema(many=True))
     def get(self, affected_id):
         affected = AffectedModel.query.get_or_404(affected_id)
         return affected.funds.all()
 
+    #@jwt_required()
     @blp.arguments(FundSchema)
     @blp.response(201, FundSchema)
     def post(self, fund_data, affected_id):
@@ -36,6 +38,7 @@ class FundsforAffected(MethodView):
 
 @blp.route("/funds/<int:fund_id>")
 class fund(MethodView):
+    #@jwt_required()
     @blp.response(200, FundSchema)
     def get(self, fund_id):
         fund = FundModel.query.get_or_404(fund_id)
@@ -51,6 +54,8 @@ class fund(MethodView):
         400,
         description="Returned if the fund is assigned to one or more donors. In this case, the fund is not deleted.",
     )
+
+    #@jwt_required()
     def delete(self, fund_id):
         fund = FundModel.query.get_or_404(fund_id)
 
@@ -67,6 +72,7 @@ class fund(MethodView):
 
 @blp.route("/donor/<int:donor_id>/fund/<int:fund_id>")
 class LinkFundsToDonors(MethodView):
+    #@jwt_required()
     @blp.response(201, FundSchema)
     def post(self, donor_id, fund_id): #this is to link exisiting donor and fund
         donor = DonorModel.query.get_or_404(donor_id)
@@ -83,6 +89,7 @@ class LinkFundsToDonors(MethodView):
         return fund
 
     @blp.response(200, FundAndDonorSchema)
+    #@jwt_required()
     def delete(self, donor_id, fund_id):
         donor = DonorModel.query.get_or_404(donor_id)
         fund = FundModel.query.get_or_404(fund_id)

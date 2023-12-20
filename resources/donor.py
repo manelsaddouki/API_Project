@@ -15,7 +15,7 @@ blp = Blueprint("Donors", __name__, description="Operations on donors")
 
 @blp.route("/donor/<int:donor_id>")
 class Donor(MethodView):
-    #@jwt_required() # require access token 
+    #@jwt_required() 
     @blp.response(200, DonorSchema)
     def get(self, donor_id):
         donor = DonorModel.query.get_or_404(donor_id)
