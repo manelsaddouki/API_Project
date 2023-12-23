@@ -39,7 +39,10 @@ class UserRegister(MethodView):
             )
         ).first(): 
             abort(409, message="A user with that username already exists.")
-
+        
+        if any(user_data[field] == "" for field in ["username", "email", "password"]): 
+           abort(406, message="All the fields are non-nullable.")
+           
         user = UserModel(
             username=user_data["username"], # user_data["username"] the one the user enters
             password=pbkdf2_sha256.hash(user_data["password"]),
