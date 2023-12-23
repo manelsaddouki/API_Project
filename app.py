@@ -1,9 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_smorest import Api
 import secrets
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from dotenv import load_dotenv
+from routes import *
 
 
 from db import db
@@ -17,11 +18,13 @@ from resources.user import blp as UserBlueprint
 
 #function to create new app 
 def create_app(db_url=None):
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='static', template_folder='templates')
     load_dotenv()
 
+    app.config['STATIC_URL_PATH'] = '/static'
+    
     app.config["PROPAGATE_EXCEPTIONS"] = True
-    app.config["API_TITLE"] = "Stores REST API"
+    app.config["API_TITLE"] = "L&D Funds Committee REST API"
     app.config["API_VERSION"] = "v1"
     app.config["OPENAPI_VERSION"] = "3.0.3"
     app.config["OPENAPI_URL_PREFIX"] = "/"
@@ -75,10 +78,19 @@ def create_app(db_url=None):
     @app.before_request
     def create_table():
         db.create_all()
+    
 
     api.register_blueprint(DonorDBBlueprint)
     api.register_blueprint(AffectedDBBlueprint)
     api.register_blueprint(FundDBBlueprint)
     api.register_blueprint(UserBlueprint)
 
-    return app                                          
+    return app   
+
+app = create_app()
+
+@app.route("/welcome")
+def index():
+    return render_template(r'base.html')
+
+                            
