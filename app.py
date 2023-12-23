@@ -1,9 +1,9 @@
 from flask import Flask, jsonify, render_template
 from flask_smorest import Api
+from dotenv import load_dotenv
 import secrets
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
-from dotenv import load_dotenv
 
 
 from db import db
@@ -35,43 +35,40 @@ def create_app(db_url=None):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app) #initialize sqlachemy extension given our created app so it connect them together
+    
     migrate = Migrate(app, db)
     
     api = Api(app)
 
     app.config["JWT_SECRET_KEY"] = str(secrets.SystemRandom().getrandbits(128))
+
     jwt = JWTManager(app)
+
+    @jwt.unauthorized_loader
+    def token_needed(error):
+       return ( jsonify(
+            {
+                "description": "Authorization required.",  "error": "NOT_Authorized", } ), 
+            401,)
+    
+    @jwt.invalid_token_loader
+    def invalid_access(error):
+       return ( jsonify(
+            {"message": "Authorization failed.", "error": "Invalid"} ), 401,)
 
     @jwt.expired_token_loader
     def expired_token_callback(jwt_header, jwt_payload):
       return (
-         jsonify({"message": "The token has expired.", "error": "token_expired"}), #I cam change the msg and error msg displayed
+         jsonify({"message": "The token has expired.", "error": "Expired"}), 
         401,)
 
-    @jwt.invalid_token_loader
-    def invalid_token_callback(error):
-       return ( jsonify(
-            {"message": "Signature verification failed.", "error": "invalid_token"} ),401,)
-
-    @jwt.unauthorized_loader
-    def missing_token_callback(error):
-       return ( jsonify(
-            {
-                "description": "Request does not contain an access token.",
-                "error": "authorization_required",
-            } ), 401,)
-    
     @jwt.needs_fresh_token_loader
-    def token_not_fresh_callback(jwt_header, jwt_payload):
+    def non_fresh(jwt_header, jwt_payload):
       return (
          jsonify(
             {
-                "description": "The token is not fresh.",
-                "error": "fresh_token_required",
-            }
-        ),
-        401,
-        )
+                "description": "Need fresh token.", "error": "NOT_fresh",
+            } ), 401, )
 
 
     @app.before_request
@@ -91,5 +88,17 @@ app = create_app()
 @app.route("/welcome")
 def index():
     return render_template(r'base.html')
+
+@app.route("/menu")
+def menu():
+    return render_template(r'home.html')
+
+@app.route("/addfund")
+def fund():
+    return render_template(r'addfund.html')
+                                        
+@app.route("/adddonor")
+def donor():
+    return render_template(r'adddonor.html')
 
                             
