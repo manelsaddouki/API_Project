@@ -58,10 +58,21 @@ function login() {
         },
         body: JSON.stringify({ username: username, password: password }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Login failed');
+        }
+        return response.json();
+    })
     .then(data => {
-        // Handle the response from the server
-        console.log(data);
+        // Check if login was successful based on the response
+        if (data.access_token && data.refresh_token) {
+            // Open a new window or tab after successful login
+            window.location.href = '/menu'; 
+        } else {
+            // Handle unsuccessful login (show an error message, etc.)
+            console.log('Login failed');
+        }
     })
     .catch(error => {
         console.error('Error:', error);
