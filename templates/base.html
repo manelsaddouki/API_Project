@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Loss and Damage Funds </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav">
+        <a href="#" class="nav_logo">L&D Funds</a>
+
+        <ul class="nav_items">
+          <li class="nav_item">
+            <a href="#" class="nav_link">Home</a>
+            <a href="#" class="nav_link">Contact</a>
+          </li>
+        </ul>
+
+        <button class="button" id="form-open">Login</button>
+      </nav>
+    </header>
+
+    <!-- Home -->
+    <section class="home">
+      <div class="form_container">
+        <i class="uil uil-times form_close">×</i>
+        <!-- Login From -->
+        <div class="login_form">
+          <form method="POST" action="/login" >
+            <h2>Login</h2>
+
+            <div class="input_box">
+              <input type="username" placeholder="username" required />
+              <i class="uil uil-envelope:before"></i>
+            </div>
+            <div class="input_box">
+              <input type="password" placeholder="Enter your password" required />
+              <i class="uil uil-envelope:before"></i>
+            </div>
+
+            <button class="button" type="button" id="login">Login Now</button>
+
+            <div class="login_signup">Don't have an account? <a href="#" id="signupLink">Signup</a></div>
+          </form>
+        </div>
+
+        <!-- Signup From -->
+        <div class="signup_form">
+          <form method="POST" action="/register">
+            <h2>Signup</h2>
+
+            
+            <div class="input_box">
+              <input type="email" placeholder="Enter your email" required />
+              <i class="uil-heart-alt:before"></i>
+            </div>
+            <div class="input_box">
+                <input type="username" placeholder="Enter your username" required />
+                <i class="uil-triangle:before"></i>
+            </div>
+            <div class="input_box">
+              <input type="password" placeholder="Enter your password" required />
+              <i class="uil uil-envelope:before"></i>
+            </div>
+
+            <button class="button" type="button" id="signup">Signup Now</button>
+
+            <div class="login_signup">Already have an account? <a href="#" id="loginLink">Login</a></div>
+          </form>
+        </div>
+      </div>
+    </section>
+     
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <!--  <script src="script.js"></script>  -->
+   
+  </body>
+</html>
