@@ -1,7 +1,6 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from passlib.hash import pbkdf2_sha256 #this is to hash the password of the client (transform it into unreadible msg)
-from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, get_jwt
+from passlib.hash import pbkdf2_sha256 #this is to hash the password 
 
 from db import db
 from models import UserModel
@@ -10,6 +9,7 @@ import requests
 import os 
 from sqlalchemy import or_
 
+from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, get_jwt
 
 blp = Blueprint("Users", "users", description="Operations on users")
 
@@ -27,6 +27,12 @@ def send_confirmation_email(to, subject, body):
         },
     )
 
+@blp.route("/users")
+class UsersList(MethodView):
+    @blp.response(200, UserRegisterSchema(many=True))
+    def get(self):
+       return UserModel.query.all()
+
 
 @blp.route("/register")
 class UserRegister(MethodView):
@@ -38,13 +44,13 @@ class UserRegister(MethodView):
                 UserModel.email == user_data["email"]
             )
         ).first(): 
-            abort(409, message="A user with that username already exists.")
+            abort(409, message="A user with that username or email already exists.")
         
         if any(user_data[field] == "" for field in ["username", "email", "password"]): 
            abort(406, message="All the fields are non-nullable.")
            
         user = UserModel(
-            username=user_data["username"], # user_data["username"] the one the user enters
+            username=user_data["username"], 
             password=pbkdf2_sha256.hash(user_data["password"]),
             email=user_data["email"],
         )
@@ -89,16 +95,11 @@ class User(MethodView):
     def get(self, user_id):
         user = UserModel.query.get_or_404(user_id)
         return user
-
+    
+    @jwt_required()
     def delete(self, user_id):
         user = UserModel.query.get_or_404(user_id)
         db.session.delete(user)
         db.session.commit()
-        return {"message": "User deleted."}, 200
+        return {"message": "User deleted successfully."}, 200
     
-@blp.route("/users")
-class UsersList(MethodView):
-    #@jwt_required()
-    @blp.response(200, UserRegisterSchema(many=True))
-    def get(self):
-       return UserModel.query.all()
