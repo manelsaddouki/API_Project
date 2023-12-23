@@ -70,3 +70,4 @@ class Donor(MethodView):
     def put(self, donor_data, donor_id):
         donor = DonorModel.query.get_or_404(donor_id)
         raise NotImplementedError("Update not done.")
+

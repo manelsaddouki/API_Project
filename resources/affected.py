@@ -60,3 +60,4 @@ class Affected (MethodView):
         db.session.delete(affected)
         db.session.commit()
         return {"message": "Affected Country deleted"}, 200
+
