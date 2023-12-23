@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='addfund.css') }}"> 
+</head>
+
+<body>
+    <form action='' class='form' id='myForm'>
+        <p class='field required'>
+            <label class='label required' for='sum'>Donation in k$</label>
+            <input class='text-input' id='sum' name='donation' required type='text'>
+        </p>
+        <div class='field'>
+            <label class='label'>Affected Country</label>
+            <ul class='checkboxes_Aff'>
+                <li class='checkbox'>
+                    <input class='checkbox-input' id='choice-0' name='countries' type='checkbox' value='Palestine'>
+                    <label class='checkbox-label' for='choice-0'>Palestine</label>
+                </li>
+            </ul>
+        </div>
+        <div class='field'>
+            <label class='label'>Donor</label>
+            <ul class='checkboxes'>
+                <li class='checkbox'>
+                    <input class='checkbox-input' id='choice-1' name='donors' type='checkbox' value='UAE'>
+                    <label class='checkbox-label' for='choice-1'>UAE</label>
+                </li>
+                <li class='checkbox'>
+                    <input class='checkbox-input' id='choice-2' name='donors' type='checkbox' value='QATAR'>
+                    <label class='checkbox-label' for='choice-2'>QATAR</label>
+                </li>
+                <li class='checkbox'>
+                    <input class='checkbox-input' id='choice-3' name='donors' type='checkbox' value='KSA'>
+                    <label class='checkbox-label' for='choice-3'>KSA</label>
+                </li>
+                <li class='checkbox'>
+                    <input class='checkbox-input' id='choice-4' name='donors' type='checkbox' value='EGYPT'>
+                    <label class='checkbox-label' for='choice-4'>EGYPT</label>
+                </li>
+            </ul>
+        </div>
+        <div class='field'>
+            <label class='label'>Type of Donation</label>
+            <ul class='options'>
+                <li class='option'>
+                    <input class='option-input' id='option-0' name='donationType' type='radio' value='Cash'>
+                    <label class='option-label' for='option-0'>Cash</label>
+                </li>
+                <li class='option'>
+                    <input class='option-input' id='option-1' name='donationType' type='radio' value='Medical Health'>
+                    <label class='option-label' for='option-1'>Medical Health</label>
+                </li>
+                <li class='option'>
+                    <input class='option-input' id='option-2' name='donationType' type='radio' value='Technical Assistance'>
+                    <label class='option-label' for='option-2'>Technical Assistance</label>
+                  </li>
+                  <li class='option'>
+                    <input class='option-input' id='option-3' name='donationType' type='radio' value='Infrastructure Development'>
+                    <label class='option-label' for='option-3'>Infrastructure Development</label>
+                  </li>
+                  <li class='option'>
+                    <input class='option-input' id='option-4' name='donationType' type='radio' value='Food Aid'>
+                    <label class='option-label' for='option-4'>Food Aid</label>
+                  </li>
+                  <li class='option'>
+                    <input class='option-input' id='option-5' name='donationType' type='radio' value='Environmental Aid'>
+                    <label class='option-label' for='option-5'>Environmental Aid</label>
+                  </li>
+                  <li class='option'>
+                    <input class='option-input' id='option-6' name='donationType' type='radio' value='Security Assistance'>
+                    <label class='option-label' for='option-6'>Security Assistance</label>
+                  </li>
+                  <li class='option'>
+                    <input class='option-input' id='option-7' name='donationType' type='radio' value='Cultural and Scientific Exchanges'>
+                    <label class='option-label' for='option-7'>Cultural Exchanges</label>
+                  </li>
+            </ul>
+        </div>
+        <p class='field half'>
+            <input class='button' type='button' value='Send' id='submitForm'>
+        </p>
+    </form>
+
+
+    <script src="{{ url_for('static', filename='addfund.js') }}"></script>
+
+</body>
+</html>
