@@ -85,7 +85,7 @@ def create_app(db_url=None):
 
 app = create_app()
 
-@app.route("/welcome")
+@app.route("/")
 def index():
     return render_template(r'base.html')
 
