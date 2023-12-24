@@ -81,24 +81,22 @@ def create_app(db_url=None):
     api.register_blueprint(FundDBBlueprint)
     api.register_blueprint(UserBlueprint)
 
+    @app.route("/")
+    def index():
+       return render_template(r'base.html')
+
+    @app.route("/menu")
+    def menu():
+        return render_template(r'home.html')
+
+    @app.route("/addfund")
+    def fund():
+      return render_template(r'addfund.html')
+                                        
+    @app.route("/adddonor")
+    def donor():
+      return render_template(r'adddonor.html')
+
     return app   
 
 app = create_app()
-
-@app.route("/welcome")
-def index():
-    return render_template(r'base.html')
-
-@app.route("/menu")
-def menu():
-    return render_template(r'home.html')
-
-@app.route("/addfund")
-def fund():
-    return render_template(r'addfund.html')
-                                        
-@app.route("/adddonor")
-def donor():
-    return render_template(r'adddonor.html')
-
-                            
