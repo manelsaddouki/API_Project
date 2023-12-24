@@ -87,7 +87,7 @@ app = create_app()
 
 @app.route("/")
 def index():
-    return ('hello world')
+    return render_template(r'base.html')
 
 @app.route("/menu")
 def menu():
