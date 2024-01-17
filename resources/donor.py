@@ -10,7 +10,6 @@ from schemas import DonorSchema, DonorUpdateSchema, DonorContinentSchema
 from db import db
 
 from sqlalchemy.exc import SQLAlchemyError
-import jsonpatch
 
 
 blp = Blueprint("Donors", __name__, description="Operations on donors")
