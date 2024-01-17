@@ -34,7 +34,7 @@ def create_app(db_url=None):
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url or os.getenv("DATABASE_URL", "sqlite:///data.db") #connection to database: in case we have db_url as parameter it uses it, if not it tries to access env variable DATABASE_URL, if it does not exist called sqlite to create our db in data.db file
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-    db.init_app(app) #initialize sqlachemy extension given our created app so it connect them together
+    db.init_app(app) 
     
     migrate = Migrate(app, db)
     
@@ -44,22 +44,21 @@ def create_app(db_url=None):
 
     jwt = JWTManager(app)
 
+    # Set the duration for access and refresh tokens in seconds
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 30 * 60  # 30 minutes
+    app.config['JWT_REFRESH_TOKEN_EXPIRES'] = 30 * 24 * 60 * 60  # 30 days
+
     @jwt.unauthorized_loader
     def token_needed(error):
        return ( jsonify(
             {
-                "description": "Authorization required.",  "error": "NOT_Authorized", } ), 
+                "description": "You should login to access the page.",  "error": "NOT_Authorized", } ), 
             401,)
-    
-    @jwt.invalid_token_loader
-    def invalid_access(error):
-       return ( jsonify(
-            {"message": "Authorization failed.", "error": "Invalid"} ), 401,)
 
     @jwt.expired_token_loader
-    def expired_token_callback(jwt_header, jwt_payload):
+    def expired_token(jwt_header, jwt_payload):
       return (
-         jsonify({"message": "The token has expired.", "error": "Expired"}), 
+         jsonify({"message": "You should login again.", "error": "Expired"}), 
         401,)
 
     @jwt.needs_fresh_token_loader
@@ -67,7 +66,7 @@ def create_app(db_url=None):
       return (
          jsonify(
             {
-                "description": "Need fresh token.", "error": "NOT_fresh",
+                "description": "This section does only allow fresh tokens.", "error": "NOT_fresh",
             } ), 401, )
 
 

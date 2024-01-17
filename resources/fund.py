@@ -1,4 +1,5 @@
 from flask.views import MethodView
+from flask import jsonify, make_response, request
 from flask_jwt_extended import jwt_required
 from flask_smorest import Blueprint, abort
 
@@ -6,7 +7,7 @@ from db import db
 
 from sqlalchemy.exc import SQLAlchemyError
 from models import FundModel, AffectedModel, DonorModel
-from schemas import FundSchema, FundAndDonorSchema
+from schemas import FundSchema, FundAndDonorSchema, FundUpdateSchema
 
 blp = Blueprint("Funds", "fund", description="Operations on funds")
 
@@ -42,6 +43,7 @@ class FundsforAffected(MethodView):
             )
 
         return  {"id": fund.id}
+    
 
 
 @blp.route("/donor/<int:donor_id>/fund/<int:fund_id>")
@@ -99,4 +101,21 @@ class fund(MethodView):
             400,
             message="Could not delete fund.",
         )
+    
+    
+    @blp.arguments(FundUpdateSchema(partial=True))
+    @blp.response(200, FundSchema)
+    def patch(self, fund_id, fund_data):
+        # Check if the fund exists
+        fund = FundModel.query.get_or_404(fund_id)
+
+        # Apply partial modifications to the fund based on the data provided
+        for key, value in fund_data.items():
+            setattr(fund, key, value)
+
+        # Commit the changes to the database
+        db.session.commit()
+
+        # Return the modified fund
+        return FundSchema().dump(fund)
     

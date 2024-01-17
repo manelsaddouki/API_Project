@@ -54,7 +54,7 @@ class Affected (MethodView):
         affected = AffectedModel.query.get_or_404(affected_id)
         return affected
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     def delete(self, affected_id):
         affected = AffectedModel.query.get_or_404(affected_id)
         db.session.delete(affected)

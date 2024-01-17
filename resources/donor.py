@@ -1,6 +1,6 @@
 import uuid
 
-from flask import request
+from flask import request, make_response
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from flask_jwt_extended import jwt_required
@@ -47,6 +47,20 @@ class DonorID (MethodView):
             return {'id': donor.id}
         else:
             return {'message': 'donor not found'}, 404
+        
+    @blp.response(200)
+    def head(self, name):
+        # Check if a donor with the given name exists
+        donor = DonorModel.query.filter_by(name=name).first()
+
+        if donor:
+            # Create a response with headers
+            response = make_response()
+            response.headers['Content-Type'] = 'application/json'
+            response.headers['Donor-ID'] = str(donor.id)
+            return response
+        else:
+            return {'message': 'donor not found'}, 404
 
 
 @blp.route("/donor/<int:donor_id>")
@@ -57,14 +71,13 @@ class Donor(MethodView):
         donor = DonorModel.query.get_or_404(donor_id)
         return donor
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     def delete(self, donor_id):
         donor = DonorModel.query.get_or_404(donor_id)
         db.session.delete(donor)
         db.session.commit()
         return {"message": "Donor deleted."}
 
-    @jwt_required()
     @blp.arguments(DonorUpdateSchema)
     @blp.response(200, DonorSchema)
     def put(self, donor_data, donor_id):

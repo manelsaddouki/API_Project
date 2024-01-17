@@ -22,6 +22,9 @@ class DonorSchema(PlainDonorSchema):
 class DonorUpdateSchema(Schema):
     name = fields.Str()
 
+class FundUpdateSchema(Schema):
+    type = fields.Str()
+    donation = fields.Float()
 
 class AffectedSchema(PlainAffectedSchema):
     funds = fields.List(fields.Nested(PlainFundSchema()), dump_only=True)
