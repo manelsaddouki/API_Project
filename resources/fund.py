@@ -117,5 +117,5 @@ class fund(MethodView):
         db.session.commit()
 
         # Return the modified fund
-        return FundSchema().dump(fund)
+        return fund
     
