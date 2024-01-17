@@ -2,7 +2,6 @@ from flask.views import MethodView
 from flask import jsonify, make_response, request
 from flask_jwt_extended import jwt_required
 from flask_smorest import Blueprint, abort
-import jsonpatch
 
 from db import db
 
