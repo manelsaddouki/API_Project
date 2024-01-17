@@ -6,10 +6,11 @@ from flask_smorest import Blueprint, abort
 from flask_jwt_extended import jwt_required
 
 from models import DonorModel
-from schemas import DonorSchema, DonorUpdateSchema
+from schemas import DonorSchema, DonorUpdateSchema, DonorContinentSchema
 from db import db
 
 from sqlalchemy.exc import SQLAlchemyError
+import jsonpatch
 
 
 blp = Blueprint("Donors", __name__, description="Operations on donors")
@@ -84,3 +85,17 @@ class Donor(MethodView):
         donor = DonorModel.query.get_or_404(donor_id)
         raise NotImplementedError("Update not done.")
 
+@blp.route("/UpdateContinent/<int:donor_id>", methods=['PATCH'])
+class updatefund(MethodView):
+   @blp.arguments(DonorContinentSchema(partial=True))  # Use partial schema for partial updates
+   @blp.response(200, DonorSchema)
+   def patch(self, data, donor_id):
+        donor = DonorModel.query.get_or_404(donor_id)
+        key_value = request.args.get('continent')
+        print (key_value) 
+        if key_value:
+            donor.continent = key_value
+            db.session.commit()
+            print ("fund type updated successfully")
+        else:
+             return {"error": "Missing 'continent' in query parameters"}, 400

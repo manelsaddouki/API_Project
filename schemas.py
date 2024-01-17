@@ -4,6 +4,7 @@ from marshmallow import Schema, fields
 class PlainDonorSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
+    continent = fields.Str()
 
 
 class PlainAffectedSchema(Schema):
@@ -21,6 +22,9 @@ class DonorSchema(PlainDonorSchema):
 
 class DonorUpdateSchema(Schema):
     name = fields.Str()
+
+class DonorContinentSchema(Schema):
+    continent = fields.Str()
 
 class FundUpdateSchema(Schema):
     type = fields.Str()

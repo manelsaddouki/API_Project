@@ -85,6 +85,8 @@ async function submitForm() {
         console.log(`Donor ${donorId} linked to Fund ${newFundId}:`, linkData);
     }
 
+    window.location.href = '/menu'; 
+
     // Log the collected data to the console
     console.log('All Form Data:', formData);
     console.log('Donation Data:', donationData);

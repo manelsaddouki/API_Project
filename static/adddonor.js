@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(data => {
                     
                     console.log('Response from /donor endpoint:', data);
+                    window.location.href = '/menu';
                 })
                 .catch(error => {
                     console.error('Error sending POST request:', error);

@@ -2,6 +2,7 @@ from flask.views import MethodView
 from flask import jsonify, make_response, request
 from flask_jwt_extended import jwt_required
 from flask_smorest import Blueprint, abort
+import jsonpatch
 
 from db import db
 
@@ -101,21 +102,20 @@ class fund(MethodView):
             400,
             message="Could not delete fund.",
         )
-    
-    
-    @blp.arguments(FundUpdateSchema(partial=True))
-    @blp.response(200, FundSchema)
-    def patch(self, fund_id, fund_data):
-        # Check if the fund exists
+
+@blp.route("/fundtype/<int:fund_id>")
+class updatefund(MethodView):
+   @blp.arguments(FundUpdateSchema(partial=True))  # Use partial schema for partial updates
+   @blp.response(200, FundSchema)
+   def patch(self, data, fund_id):
         fund = FundModel.query.get_or_404(fund_id)
+        key_value = request.args.get('type')
+        print (key_value) 
+        if key_value:
+            fund.type = key_value
+            db.session.commit()
+            print ("fund type updated successfully")
+        else:
+             return {"error": "Missing 'continent' in query parameters"}, 400
 
-        # Apply partial modifications to the fund based on the data provided
-        for key, value in fund_data.items():
-            setattr(fund, key, value)
-
-        # Commit the changes to the database
-        db.session.commit()
-
-        # Return the modified fund
-        return fund
-    
+        
