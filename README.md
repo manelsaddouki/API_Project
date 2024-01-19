@@ -1,4 +1,9 @@
 # Rest-API 
+
+## Testing (10min Video): 
+The live test of my API/Web Sevice is accessible at [https://drive.google.com/file/d/1ZAGcHAQTG3cYw8FxmzwSXcpUJKqrDXQt/view?usp=sharing](https://drive.google.com/file/d/1ZAGcHAQTG3cYw8FxmzwSXcpUJKqrDXQt/view?usp=sharing).
+
+## Introduction: 
 This project is part of the Web Service class, focusing on the assigned theme of 'Politics.' The objective is to design and implement an API centered around a political topic.
 
 For my project, I chose to develop an API that manages funds allocated by countries to address specific issues such as the effect of war (e.g., Palestine/Ukraine), responses to natural disasters (e.g., Morocco), or limiting the impacts of climate change (e.g., Brazil).
