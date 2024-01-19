@@ -89,11 +89,11 @@ class fund(MethodView):
         fund = FundModel.query.get_or_404(fund_id)
         return fund
 
-    @jwt_required(fresh=True)
+    #@jwt_required(fresh=True)
     def delete(self, fund_id):
         fund = FundModel.query.get_or_404(fund_id)
 
-        if not fund.donors:
+        if fund:
             db.session.delete(fund)
             db.session.commit()
             return {"message": "Fund deleted."}
