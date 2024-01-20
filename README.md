@@ -3,6 +3,12 @@
 ## Testing (10min Video): 
 The live test of my API/Web Sevice is accessible at [https://drive.google.com/file/d/1ZAGcHAQTG3cYw8FxmzwSXcpUJKqrDXQt/view?usp=sharing](https://drive.google.com/file/d/1ZAGcHAQTG3cYw8FxmzwSXcpUJKqrDXQt/view?usp=sharing).
 
+## Link to my Report & Presentation: 
+My report is accessible at [https://www.overleaf.com/read/fgskfpqgfshb#cc3fdf](https://www.overleaf.com/read/fgskfpqgfshb#cc3fdf).
+My Presentation is accessible at [https://www.overleaf.com/read/skwkdhsxnktq#f17396](https://www.overleaf.com/read/skwkdhsxnktq#f17396).
+
+N.B: PDF versions are available in this repository. 
+
 ## Introduction: 
 This project is part of the Web Service class, focusing on the assigned theme of 'Politics.' The objective is to design and implement an API centered around a political topic.
 
