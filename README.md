@@ -13,7 +13,7 @@ N.B: PDF versions are available in this repository.
 ## Introduction: 
 This project is part of the Web Service class, focusing on the assigned theme of 'Politics.' The objective is to design and implement an API centered around a political topic.
 
-For my project, I chose to develop an API that manages funds allocated by countries to address specific issues such as the effect of war (e.g., Palestine/Ukraine), responses to natural disasters (e.g., Morocco), or limiting the impacts of climate change (e.g., Brazil).
+For my project, I chose to develop an API that manages funds allocated by countries to address specific issues such as the effect of war, responses to natural disasters, or limiting the impacts of climate change.
 
 As part of this project, I have created a prototype for the front end. Now, we have a user-friendly interface that facilitates interaction with the API. The live version of my web service is accessible at [https://lossanddamagefunds.onrender.com/](https://lossanddamagefunds.onrender.com/).
 
