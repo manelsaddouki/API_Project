@@ -1,8 +1,5 @@
 # Rest-API 
 
-## Testing (10min Video): 
-The live test of my API/Web Sevice is accessible at [https://drive.google.com/file/d/1ZAGcHAQTG3cYw8FxmzwSXcpUJKqrDXQt/view?usp=sharing](https://drive.google.com/file/d/1ZAGcHAQTG3cYw8FxmzwSXcpUJKqrDXQt/view?usp=sharing).
-
 ## Link to my Report & Presentation: 
 My report is accessible at [https://www.overleaf.com/read/fgskfpqgfshb#cc3fdf](https://www.overleaf.com/read/fgskfpqgfshb#cc3fdf).
 
