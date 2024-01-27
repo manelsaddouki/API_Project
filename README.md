@@ -12,7 +12,7 @@ This project is part of the Web Service class, focusing on the assigned theme of
 
 For my project, I chose to develop an API that manages funds allocated by countries to address specific issues such as the effect of war, responses to natural disasters, or limiting the impacts of climate change.
 
-As part of this project, I have created a prototype for the front end. Now, we have a user-friendly interface that facilitates interaction with the API. The live version of my web service is accessible at [https://lossanddamagefunds.onrender.com/](https://lossanddamagefunds.onrender.com/).
+As part of this project, I have created a prototype for the front end. Now, we have a user-friendly interface that facilitates interaction with the API. The live version of my web service is accessible at [https://lossanddamagefunds.onrender.com/](https://lossanddamagefunds.onrender.com/) (with the free plan for deployment, the website needs to be re-activated after a period of inactivity). 
 
 The development process involved various libraries and tools:
 
